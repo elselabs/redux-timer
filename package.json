@@ -1,0 +1,47 @@
+{
+  "name": "redux-timer",
+  "version": "1.0.0",
+  "description": "SetInterval middleware for Redux",
+  "main": "lib/redux-timer.js",
+  "files": ["lib", "src"],
+  "scripts": {
+    "build": "webpack --env dev && webpack --env build",
+    "dev": "webpack --progress --colors --watch --env dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/elselabs/redux-timer"
+  },
+  "keywords": [
+    "redux",
+    "setinterval",
+    "timer",
+    "middleware",
+    "redux-middleware"
+  ],
+  "author": "Else Labs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/elselabs/redux-timer/issues"
+  },
+  "homepage": "https://github.com/elselabs/redux-timer",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "eslint-loader": "^1.9.0",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jest": "^21.2.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.4.0",
+    "webpack": "^3.10.0",
+    "yargs": "^10.0.3"
+  }
+}
