@@ -2,7 +2,7 @@ export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
 const timers = {};
 
-const validateTimerName = name => {
+const validateTimerName = (name) => {
   if (!name) {
     throw new Error('Missing parameter. Name is required');
   }
@@ -11,7 +11,7 @@ const validateTimerName = name => {
   }
 };
 
-const validateTimerAction = action => {
+const validateTimerAction = (action) => {
   if (!action) {
     throw new Error('Missing parameter. Action is required');
   }
@@ -20,7 +20,7 @@ const validateTimerAction = action => {
   }
 };
 
-const validateTimerInterval = interval => {
+const validateTimerInterval = (interval) => {
   if (!interval) {
     throw new Error('Missing parameter. Interval is required');
   }
@@ -57,12 +57,13 @@ const stopTimer = ({ name }) => {
   }
 };
 
-const timerMiddleware = state => next => action => {
-  switch (action.type) {
+const timerMiddleware = state => next => (action) => {
+  const { type, payload } = action;
+  switch (type) {
     case START_TIMER:
-      return startTimer(state, action);
+      return startTimer(state, payload);
     case STOP_TIMER:
-      return stopTimer(action);
+      return stopTimer(payload);
     default:
       return next(action);
   }
