@@ -1,4 +1,4 @@
-# redux-timer [![npm version](https://img.shields.io/npm/v/redux-timer.svg?style=flat-square)](https://www.npmjs.com/package/redux-timer)
+# redux-timer [![npm version](https://img.shields.io/npm/v/redux-timer.svg?style=flat-square)](https://www.npmjs.com/package/redux-timer)[![npm downloads](https://img.shields.io/npm/dm/redux-timer.svg?style=flat-square)](https://www.npmjs.com/package/redux-timer)
 
 [SetInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) [middleware](http://redux.js.org/docs/advanced/Middleware.html) for Redux. Used to dispatch an action or function periodically.
 
