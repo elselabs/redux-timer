@@ -2,9 +2,9 @@
 
 const webpack = require('webpack');
 
-const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
+const { UglifyJsPlugin } = webpack.optimize;
 const path = require('path');
-const env = require('yargs').argv.env; // use --env with webpack 2
+const { env } = require('yargs').argv; // use --env with webpack 2
 const pkg = require('./package.json');
 
 const libraryName = pkg.name;
@@ -20,7 +20,7 @@ if (env === 'build') {
 }
 
 const config = {
-  entry: `${__dirname}/src/index.js`,
+  entry: ['babel-polyfill', `${__dirname}/src/index.js`],
   devtool: 'source-map',
   output: {
     path: `${__dirname}/lib`,
