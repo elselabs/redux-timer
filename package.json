@@ -1,11 +1,13 @@
 {
   "name": "redux-timer",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "description": "SetInterval middleware for Redux",
-  "main": "lib/redux-timer.js",
-  "files": ["lib", "src"],
+  "main": "lib/index.js",
+  "files": ["lib", "dist", "src"],
   "scripts": {
-    "build": "webpack --env dev && webpack --env build",
+    "build":
+      "webpack --env dev && webpack --env build && npm run build:commonjs",
+    "build:commonjs": "BABEL_ENV=commonjs babel src --out-dir lib",
     "dev": "webpack --progress --colors --watch --env dev"
   },
   "repository": {
