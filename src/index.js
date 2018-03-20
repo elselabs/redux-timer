@@ -1,68 +1,71 @@
 export const START_TIMER = 'START_TIMER';
 export const STOP_TIMER = 'STOP_TIMER';
+const timers = {};
 
-export default function timerMiddleware({ dispatch }) {
-  const timers = {};
+const validateTimerName = name => {
+  if (!name) {
+    throw new Error('Missing parameter. Name is required');
+  }
+  if (typeof name !== 'string') {
+    throw new Error('Name must be a string');
+  }
+};
 
-  const validateTimerName = (timerName) => {
-    if (!timerName) throw new Error('Missing timerName');
-    if (typeof timerName !== 'string') {
-      throw new Error('timerName must be a string');
-    }
-  };
+const validateTimerAction = action => {
+  if (!action) {
+    throw new Error('Missing parameter. Action is required');
+  }
+  if (typeof action !== 'string' && typeof action !== 'function') {
+    throw new Error('Action must be a function or string');
+  }
+};
 
-  const validateTimerAction = (timerAction) => {
-    // if timerAction exists but is not a string or function throw error
-    if (timerAction) {
-      if (
-        typeof timerAction !== 'string' &&
-        typeof timerAction !== 'function'
-      ) {
-        throw new Error('timerAction must be a function or string');
-      }
-    } else {
-      throw new Error('Missing timerAction');
-    }
-  };
+const validateTimerInterval = interval => {
+  if (!interval) {
+    throw new Error('Missing parameter. Interval is required');
+  }
+  if (typeof interval !== 'number') {
+    throw new Error('Interval must be a number');
+  }
+};
 
-  const validateTimerInterval = (timerInterval) => {
-    if (!timerInterval) throw new Error('Missing timerInterval');
-    if (typeof timerInterval !== 'number') {
-      throw new Error('timerInterval must be a number');
-    }
-  };
+const startTimer = ({ dispatch }, { name, action, interval }) => {
+  validateTimerName(name);
+  validateTimerAction(action);
+  validateTimerInterval(interval);
 
-  // eslint-disable-next-line consistent-return
-  return next => (action) => {
-    if (action.type === START_TIMER) {
-      const { timerName, timerAction, timerInterval } = action.payload;
+  // clear timer if already started
+  if (timers[name]) {
+    clearInterval(timers[name]);
+  }
 
-      validateTimerName(timerName);
-      validateTimerAction(timerAction);
-      validateTimerInterval(timerInterval);
+  const func =
+    typeof action === 'string' ? () => dispatch({ type: action }) : action;
 
-      // clear timer if already started
-      if (timers[timerName]) {
-        clearInterval(timers[timerName]);
-      }
+  // run immediately
+  func();
 
-      const func =
-        typeof timerAction === 'string'
-          ? () => dispatch({ type: timerAction })
-          : timerAction;
+  // create the setInterval
+  timers[name] = setInterval(func, interval);
+};
 
-      // run immediately
-      func();
-      // create the setInterval
-      timers[timerName] = setInterval(func, timerInterval);
-    } else if (action.type === STOP_TIMER) {
-      const { timerName } = action.payload;
-      validateTimerName(timerName);
-      if (timers[timerName]) {
-        clearInterval(timers[timerName]);
-      }
-    } else {
-      return next(action); // do nothing just continue
-    }
-  };
-}
+const stopTimer = ({ name }) => {
+  validateTimerName(name);
+
+  if (timers[name]) {
+    clearInterval(timers[name]);
+  }
+};
+
+const timerMiddleware = state => next => action => {
+  switch (action.type) {
+    case START_TIMER:
+      return startTimer(state, action);
+    case STOP_TIMER:
+      return stopTimer(action);
+    default:
+      return next(action);
+  }
+};
+
+export default timerMiddleware;

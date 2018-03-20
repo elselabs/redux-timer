@@ -1,6 +1,6 @@
 # redux-timer [![npm version](https://img.shields.io/npm/v/redux-timer.svg?style=flat-square)](https://www.npmjs.com/package/redux-timer)[![npm downloads](https://img.shields.io/npm/dm/redux-timer.svg?style=flat-square)](https://www.npmjs.com/package/redux-timer)
 
-[SetInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) [middleware](http://redux.js.org/docs/advanced/Middleware.html) for Redux. Used to dispatch an action or function periodically.
+[SetInterval](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) [middleware](http://redux.js.org/docs/advanced/Middleware.html) for Redux used to dispatch an action or function periodically.
 
 ## Installation
 
@@ -21,11 +21,11 @@ const store = createStore(reducers, applyMiddleware(timerMiddleware));
 
 To start a timer, you have to dispatch an action with type `START_TIMER` with a payload of the following.
 
-* timerName (required) - `String` representing the name of the timer.
-* timerAction (required) - `String` matching an action type **or** a `Function` that you would like to periodically execute.
-* timerInterval (required) - Timer interval in milliseconds
+* name (required) - `String` representing the name of the timer.
+* action (required) - `String` matching an action type **or** a `Function` that you would like to periodically execute.
+* interval (required) - Timer interval in milliseconds
 
-#### Using `timerAction` as an action type
+#### Using `action` as an action type
 
 ```js
 import { START_TIMER } from 'redux-timer';
@@ -33,14 +33,14 @@ import { START_TIMER } from 'redux-timer';
 export const startTimer = () => ({
   type: START_TIMER,
   payload: {
-    timerName: 'exampleTimer',
-    timerAction: 'SOME_ACTION_TICK',
-    timerInterval: 1000
+    name: 'exampleTimer',
+    action: 'SOME_ACTION_TICK',
+    interval: 1000
   }
 });
 ```
 
-#### Using `timerAction` as a `Function`
+#### Using `action` as a `Function`
 
 ```js
 import { START_TIMER } from 'redux-timer';
@@ -49,8 +49,8 @@ export const exampleAction = () => async dispatch => {
   dispatch({
     type: START_TIMER,
     payload: {
-      timerName: 'exampleTimer',
-      timerAction: async () => {
+      name: 'exampleTimer',
+      action: async () => {
         try {
           const response = await fetch('https://api.github.com');
           const data = await response.json();
@@ -59,7 +59,7 @@ export const exampleAction = () => async dispatch => {
           // do something with this error
         }
       },
-      timerInterval: 5000
+      interval: 5000
     }
   });
 };
@@ -69,7 +69,7 @@ export const exampleAction = () => async dispatch => {
 
 To stop a timer, you have to dispatch an action with type `STOP_TIMER` with a payload of the following.
 
-* timerName (required) - `String` representing the name of the timer
+* name (required) - `String` representing the name of the timer
 
 ```js
 import { STOP_TIMER } from 'redux-timer';
@@ -77,7 +77,7 @@ import { STOP_TIMER } from 'redux-timer';
 export const stopTimer = () => ({
   type: STOP_TIMER,
   payload: {
-    timerName: 'exampleTimer'
+    name: 'exampleTimer'
   }
 });
 ```
