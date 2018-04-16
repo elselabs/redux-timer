@@ -29,7 +29,12 @@ const validateTimerInterval = (interval) => {
   }
 };
 
-const startTimer = ({ dispatch }, { name, action, interval }) => {
+const startTimer = (
+  { dispatch },
+  {
+    name, action, interval, runImmediately = true,
+  },
+) => {
   validateTimerName(name);
   validateTimerAction(action);
   validateTimerInterval(interval);
@@ -43,7 +48,7 @@ const startTimer = ({ dispatch }, { name, action, interval }) => {
     typeof action === 'string' ? () => dispatch({ type: action }) : action;
 
   // run immediately
-  func();
+  if (runImmediately) func();
 
   // create the setInterval
   timers[name] = setInterval(func, interval);
